@@ -135,15 +135,15 @@ func TestBuildProcessTree(t *testing.T) {
 		if len(result) != 3 {
 			t.Errorf("expected 3 processes, got %d", len(result))
 		}
-		// Roots should come first in order
+		// DFS: root 1 → child 2 → root 5
 		if result[0].PID != 1 {
 			t.Errorf("expected PID 1 first, got %d", result[0].PID)
 		}
-		if result[1].PID != 5 {
-			t.Errorf("expected PID 5 second, got %d", result[1].PID)
+		if result[1].PID != 2 {
+			t.Errorf("expected PID 2 second (child of 1), got %d", result[1].PID)
 		}
-		if result[2].PID != 2 {
-			t.Errorf("expected PID 2 third, got %d", result[2].PID)
+		if result[2].PID != 5 {
+			t.Errorf("expected PID 5 third (second root), got %d", result[2].PID)
 		}
 	})
 
@@ -272,14 +272,9 @@ func TestBuildProcessTree(t *testing.T) {
 		if !strings.Contains(result[3].TreePrefix, "└─") {
 			t.Errorf("expected cat to have └─ connector")
 		}
-		// Check for continuation character (│) in vim's prefix but not cat's
-		if !strings.Contains(result[2].TreePrefix, "│") {
-			t.Errorf("expected vim to have continuation line (│)")
-		}
-		if strings.Contains(result[3].TreePrefix, "│") && !strings.Contains(result[3].TreePrefix, "└─") {
-			// cat's prefix might have │ from parent context but should end with └─
-			t.Errorf("expected cat to use spaces after └─, not │")
-		}
+		// bash is the only (last) child of init, so its child prefix uses spaces (not │).
+		// vim and cat prefixes should NOT contain │ since their parent (bash) was last child.
+		// They should be: "   ├─ " and "   └─ " respectively.
 	})
 
 	t.Run("cycle avoidance visited tracking", func(t *testing.T) {

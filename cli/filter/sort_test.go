@@ -344,8 +344,12 @@ func TestSortProcesses(t *testing.T) {
 		cfg := types.SortConfig{Field: types.SortByCommand, Direction: types.SortAsc}
 		result := SortProcesses(procs, cfg, nil)
 
-		if result[0].Command != "/bin/cat" {
-			t.Errorf("expected '/bin/cat' first, got '%s'", result[0].Command)
+		// Case-insensitive: bash < cat < vim
+		if result[0].Command != "/BIN/bash" {
+			t.Errorf("expected '/BIN/bash' first, got '%s'", result[0].Command)
+		}
+		if result[1].Command != "/bin/cat" {
+			t.Errorf("expected '/bin/cat' second, got '%s'", result[1].Command)
 		}
 	})
 }
