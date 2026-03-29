@@ -1,0 +1,18 @@
+# Rust build artifacts
+core/target/
+
+# Go binary
+neohtop-cli
+neohtop-cli.exe
+neohtop-cli-*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
