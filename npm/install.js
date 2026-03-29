@@ -39,10 +39,13 @@ function install() {
   const binName = isWindows ? "neohtop-cli.exe" : "neohtop-cli";
   const binPath = path.join(binDir, binName);
 
-  // Skip if binary already exists (e.g. re-running postinstall)
+  // Skip if real binary already exists (not the placeholder shell script)
   if (fs.existsSync(binPath)) {
-    console.log("neohtop-cli: binary already installed");
-    return;
+    const header = fs.readFileSync(binPath, { encoding: "utf8", flag: "r" }).slice(0, 20);
+    if (!header.startsWith("#!/bin/sh")) {
+      console.log("neohtop-cli: binary already installed");
+      return;
+    }
   }
 
   const archiveName = `${target.file}.${target.archive}`;
