@@ -150,7 +150,7 @@ jobs:
           npm version "$VERSION" --no-git-tag-version --allow-same-version
           mkdir -p bin
           # Placeholder so npm doesn't warn about missing bin
-          echo '#!/bin/sh\necho "Run: npm install -g neohtop-cli"' > bin/neohtop-cli
+          printf '#!/bin/sh\necho "Run: npm install -g neohtop-cli"\n' > bin/neohtop-cli
           chmod +x bin/neohtop-cli
           npm publish --access public
 
