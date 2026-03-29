@@ -152,38 +152,41 @@ func readProcStat(pid uint32) *procStat {
 		v, _ := strconv.ParseUint(fields[1], 10, 32)
 		stat.ppid = uint32(v)
 	}
-	if len(fields) > 1 {
-		v, _ := strconv.ParseUint(fields[1], 10, 32)
-		stat.ppid = uint32(v)
+	if len(fields) > 3 {
+		v, _ := strconv.ParseUint(fields[3], 10, 32)
+		stat.sid = uint32(v)
 	}
-	if len(fields) > 10 {
-		v, _ := strconv.ParseUint(fields[10], 10, 32)
-		stat.numThreads = uint32(v)
-	}
-	if len(fields) > 19 {
-		stat.vsize, _ = strconv.ParseUint(fields[19], 10, 64)
-	}
-	if len(fields) > 20 {
-		stat.rss, _ = strconv.ParseUint(fields[20], 10, 64)
-	}
+	// Fields after comm in /proc/[pid]/stat (0-indexed):
+	//  0:state  1:ppid  2:pgrp  3:session  4:tty_nr  5:tpgid  6:flags
+	//  7:minflt  8:cminflt  9:majflt  10:cmajflt
+	// 11:utime  12:stime  13:cutime  14:cstime
+	// 15:priority  16:nice  17:num_threads  18:itrealvalue
+	// 19:starttime  20:vsize  21:rss
 
-	// utime and stime (fields 11 and 12 in zero-indexed stat fields after comm)
 	if len(fields) > 11 {
 		stat.utime, _ = strconv.ParseUint(fields[11], 10, 64)
 	}
 	if len(fields) > 12 {
 		stat.stime, _ = strconv.ParseUint(fields[12], 10, 64)
 	}
-
-	// starttime (field 19 in zero-indexed, which is fields[18])
-	if len(fields) > 18 {
-		stat.starttime, _ = strconv.ParseUint(fields[18], 10, 64)
+	if len(fields) > 17 {
+		v, _ := strconv.ParseUint(fields[17], 10, 32)
+		stat.numThreads = uint32(v)
+	}
+	if len(fields) > 19 {
+		stat.starttime, _ = strconv.ParseUint(fields[19], 10, 64)
+	}
+	if len(fields) > 20 {
+		stat.vsize, _ = strconv.ParseUint(fields[20], 10, 64)
+	}
+	if len(fields) > 21 {
+		stat.rss, _ = strconv.ParseUint(fields[21], 10, 64)
 	}
 
 	// Get current time in ticks
 	stat.currentTime = getTicksSinceBoot()
 
-	// Read UID and SID from /proc/[pid]/status
+	// Read UID from /proc/[pid]/status
 	statusPath := filepath.Join("/proc", strconv.FormatUint(uint64(pid), 10), "status")
 	statusData, err := os.ReadFile(statusPath)
 	if err == nil {
@@ -196,13 +199,7 @@ func readProcStat(pid uint32) *procStat {
 					v, _ := strconv.ParseUint(parts[1], 10, 32)
 					stat.uid = uint32(v)
 				}
-			}
-			if strings.HasPrefix(line, "Session:") {
-				parts := strings.Fields(line)
-				if len(parts) > 1 {
-					v, _ := strconv.ParseUint(parts[1], 10, 32)
-					stat.sid = uint32(v)
-				}
+				break
 			}
 		}
 	}
