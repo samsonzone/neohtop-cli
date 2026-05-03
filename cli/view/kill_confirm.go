@@ -35,7 +35,7 @@ func (kc *KillConfirm) Render(p types.Process, width, height int) string {
 	contentW := 44
 
 	// Title
-	title := danger.Render("☠️  KILL PROCESS")
+	title := danger.Render("KILL PROCESS")
 	close := hotkey.Render("esc") + dim.Render(" cancel")
 	gap := contentW - lipgloss.Width(title) - lipgloss.Width(close)
 	if gap < 1 {
@@ -46,7 +46,7 @@ func (kc *KillConfirm) Render(p types.Process, width, height int) string {
 	divider := sep.Render(strings.Repeat("─", contentW))
 
 	// Warning message
-	warnMsg := danger.Render("⚠️  This will forcefully terminate the process!")
+	warnMsg := danger.Render(IconWarning + "  This will forcefully terminate the process!")
 
 	// Process info
 	icon := ProcessIcon(p.Name)

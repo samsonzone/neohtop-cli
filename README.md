@@ -1,6 +1,6 @@
 <div align="center">
 
-# 👻 NeoHtop CLI
+# NeoHtop CLI
 
 **A cross-platform terminal process monitor with btop-style visualizations**
 
@@ -303,17 +303,17 @@ neohtop-cli/
 
 | Feature | Desktop | CLI |
 |---|:---:|:---:|
-| Process monitoring | ✅ | ✅ |
-| CPU per-core stats | ✅ | ✅ |
-| Memory / Disk / Network | ✅ | ✅ |
-| Regex search | ✅ | ✅ |
-| Kill / Pin / Inspect | ✅ | ✅ |
-| Mouse support | ✅ | ✅ |
+| Process monitoring | yes | yes |
+| CPU per-core stats | yes | yes |
+| Memory / Disk / Network | yes | yes |
+| Regex search | yes | yes |
+| Kill / Pin / Inspect | yes | yes |
+| Mouse support | yes | yes |
 | Themes | 12 | **15** |
-| Process tree view | — | ✅ |
-| JSON scripting | — | ✅ |
-| Runs in terminal | — | ✅ |
-| Single binary | — | ✅ |
+| Process tree view | — | yes |
+| JSON scripting | — | yes |
+| Runs in terminal | — | yes |
+| Single binary | — | yes |
 
 <br/>
 
@@ -331,6 +331,6 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for development setup, code style, and ho
 
 **[NeoHtop Desktop](https://github.com/Abdenasser/NeoHtop)** · **[Bubble Tea](https://github.com/charmbracelet/bubbletea)** · **[btop](https://github.com/aristocratos/btop)**
 
-Made with 👻 by [Abdenasser](https://github.com/Abdenasser)
+Made by [Abdenasser](https://github.com/Abdenasser)
 
 </div>

@@ -50,7 +50,7 @@ func (h *Help) Render(width, height int) string {
 
 	// Two-column layout: left = General/Nav/Actions, right = Sort/Display/Mouse
 	leftLines := []string{
-		section.Render("⚙️ General"),
+		section.Render("General"),
 		bind("q  Ctrl+c", "Quit"),
 		bind("?", "This help"),
 		bind("Space", "Pause/resume"),
@@ -58,29 +58,29 @@ func (h *Help) Render(width, height int) string {
 		bind("Esc", "Close/clear"),
 		bind("t", "Themes"),
 		"",
-		section.Render("🧭 Navigation"),
+		section.Render("Navigation"),
 		bind("↑ ↓  j", "Move selection"),
 		bind("PgUp PgDn", "Scroll fast"),
 		bind("Home g", "Jump to top"),
 		bind("End  G", "Jump to bottom"),
 		"",
-		section.Render("⚡ Process Actions"),
+		section.Render("Process Actions"),
 		bind("i  Enter", "Details"),
 		bind("k  x  Del", "Kill"),
 		bind("p", "Pin/unpin"),
 	}
 
 	rightLines := []string{
-		section.Render("🔢 Sorting"),
+		section.Render("Sorting"),
 		bind("0-9", "Sort by col N"),
 		"",
-		section.Render("🖥️ Display"),
+		section.Render("Display"),
 		bind("f", "Filters"),
 		bind("c", "Columns"),
 		bind("T", "Tree view"),
 		bind("r", "Refresh rate"),
 		"",
-		section.Render("🖱️ Mouse"),
+		section.Render("Mouse"),
 		bind("Click", "Select row"),
 		bind("Double-click", "Details"),
 		bind("Header click", "Sort"),

@@ -1,4 +1,4 @@
-# 👻 NeoHtop CLI
+# NeoHtop CLI
 
 **A cross-platform terminal process monitor with btop-style visualizations**
 

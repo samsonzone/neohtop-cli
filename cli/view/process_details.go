@@ -78,12 +78,12 @@ func (pd *ProcessDetails) Render(p types.Process, detail *types.ProcessDetail, a
 
 	pills := pillLabel.Render("PID ") + val.Render(fmt.Sprintf("%d", p.PID)) + dim.Render("  "+IconDot+"  ") +
 		pillLabel.Render("Status ") + lipgloss.NewStyle().Foreground(statusColor).Render(p.Status) + dim.Render("  "+IconDot+"  ") +
-		pillLabel.Render("🚀 ") + lipgloss.NewStyle().Foreground(cpuColor).Render(FormatPercentage(p.CPUUsage)) + dim.Render("  "+IconDot+"  ") +
-		pillLabel.Render("💾 ") + val.Render(FormatBytes(p.MemoryUsage))
+		pillLabel.Render("CPU ") + lipgloss.NewStyle().Foreground(cpuColor).Render(FormatPercentage(p.CPUUsage)) + dim.Render("  "+IconDot+"  ") +
+		pillLabel.Render("Mem ") + val.Render(FormatBytes(p.MemoryUsage))
 
 	// ── Process Info ──
 	infoLines := []string{
-		section.Render("📋 Process"),
+		section.Render("Process"),
 		label.Render("Name") + val.Render(p.Name),
 		label.Render("PID") + val.Render(fmt.Sprintf("%d", p.PID)),
 		label.Render("Parent PID") + val.Render(fmt.Sprintf("%d", p.PPID)),
@@ -99,7 +99,7 @@ func (pd *ProcessDetails) Render(p types.Process, detail *types.ProcessDetail, a
 
 	// ── Resources ──
 	resLines := []string{
-		section.Render("⚡ Resources"),
+		section.Render("Resources"),
 		label.Render("CPU") + lipgloss.NewStyle().Foreground(cpuColor).Render(FormatPercentage(p.CPUUsage)),
 		label.Render("Memory") + val.Render(FormatBytes(p.MemoryUsage)),
 		label.Render("Virtual Mem") + val.Render(FormatBytes(p.VirtualMemory)),
@@ -110,7 +110,7 @@ func (pd *ProcessDetails) Render(p types.Process, detail *types.ProcessDetail, a
 
 	// ── Command ──
 	cmdLines := []string{
-		section.Render("💻 Command"),
+		section.Render("Command"),
 		val.Render(Truncate(p.Command, contentW)),
 	}
 	if p.Root != "" {
@@ -121,7 +121,7 @@ func (pd *ProcessDetails) Render(p types.Process, detail *types.ProcessDetail, a
 	children := findChildren(p.PID, allProcs)
 	var childLines []string
 	if len(children) > 0 {
-		childLines = append(childLines, section.Render(fmt.Sprintf("🌿 Children (%d)", len(children))))
+		childLines = append(childLines, section.Render(fmt.Sprintf("Children (%d)", len(children))))
 		header := dim.Render(PadRight("Name", 20) + PadRight("PID", 8) + PadRight("CPU", 8) + "Memory")
 		childLines = append(childLines, header)
 		max := 6
@@ -141,7 +141,7 @@ func (pd *ProcessDetails) Render(p types.Process, detail *types.ProcessDetail, a
 	// ── Environment ──
 	var envLines []string
 	if detail != nil && len(detail.Environ) > 0 {
-		envLines = append(envLines, section.Render(fmt.Sprintf("🔧 Environment (%d)", len(detail.Environ))))
+		envLines = append(envLines, section.Render(fmt.Sprintf("Environment (%d)", len(detail.Environ))))
 		max := 5
 		for i, env := range detail.Environ {
 			if i >= max {
@@ -151,7 +151,7 @@ func (pd *ProcessDetails) Render(p types.Process, detail *types.ProcessDetail, a
 			envLines = append(envLines, dim.Render(Truncate(env, contentW)))
 		}
 	} else if detail == nil {
-		envLines = append(envLines, section.Render("🔧 Environment"))
+		envLines = append(envLines, section.Render("Environment"))
 		envLines = append(envLines, dim.Render("Loading..."))
 	}
 
@@ -175,8 +175,8 @@ func (pd *ProcessDetails) Render(p types.Process, detail *types.ProcessDetail, a
 	// ── Footer ──
 	lines = append(lines, "")
 	lines = append(lines, divider)
-	kHint := danger.Render("k") + dim.Render(" ☠️ kill")
-	pHint := hotkey.Render("p") + dim.Render(" 📌 pin")
+	kHint := danger.Render("k") + dim.Render(" kill")
+	pHint := hotkey.Render("p") + dim.Render(" pin")
 	eHint := hotkey.Render("esc") + dim.Render(" close")
 	lines = append(lines, kHint+"    "+pHint+"    "+eHint)
 

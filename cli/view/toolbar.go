@@ -72,13 +72,13 @@ func (t *Toolbar) Render(searchTerm string, searchMode bool, sortCfg types.SortC
 		return pill
 	}
 
-	// Emoji-only button for ultra-compact mode
-	iconBtn := func(emoji string) string {
+	// Icon-only button for ultra-compact mode
+	iconBtn := func(icon string) string {
 		return lipgloss.NewStyle().
 			Background(th.Surface0).
 			Foreground(th.Subtext1).
 			Padding(0, 0).
-			Render(emoji)
+			Render(icon)
 	}
 
 	// ── Left section: Search + Filters ───────────────────────────────
@@ -94,10 +94,10 @@ func (t *Toolbar) Render(searchTerm string, searchMode bool, sortCfg types.SortC
 	} else if searchTerm != "" {
 		searchBox = activeStyle.Render(IconSearch + " " + searchTerm)
 	} else {
-		searchBox = btn("🔍 Search", "s")
+		searchBox = btn("Search", "s")
 	}
 
-	filterHint := btn("🧪 Filters", "f")
+	filterHint := btn("Filters", "f")
 
 	left := searchBox + " " + filterHint
 	leftLen := lipgloss.Width(left)
@@ -112,13 +112,13 @@ func (t *Toolbar) Render(searchTerm string, searchMode bool, sortCfg types.SortC
 
 	// ── Right section: Cols, Pause, Sort, Theme, Help ──
 
-	colHint := btn("📊 Cols", "c")
+	colHint := btn("Cols", "c")
 
 	var pauseHint string
 	if frozen {
-		pauseHint = warnBtn("🧊 FROZEN", "Space")
+		pauseHint = warnBtn("FROZEN", "Space")
 	} else {
-		pauseHint = btn("⏸ Pause", "Space")
+		pauseHint = btn("Pause", "Space")
 	}
 
 	// Refresh rate indicator
@@ -131,13 +131,13 @@ func (t *Toolbar) Render(searchTerm string, searchMode bool, sortCfg types.SortC
 
 	var treeHint string
 	if treeMode {
-		treeHint = warnBtn("🌳 Tree", "T")
+		treeHint = warnBtn("Tree", "T")
 	} else {
-		treeHint = btn("🌳 Tree", "T")
+		treeHint = btn("Tree", "T")
 	}
 
-	themeHint := btn("🎨 Theme", "t")
-	helpHint := btn("❓ Help", "?")
+	themeHint := btn("Theme", "t")
+	helpHint := btn("Help", "?")
 
 	right := colHint + " " + treeHint + " " + pauseHint + " " + rateHint + " " + themeHint + " " + helpHint
 	rightLen := lipgloss.Width(right)
@@ -152,16 +152,16 @@ func (t *Toolbar) Render(searchTerm string, searchMode bool, sortCfg types.SortC
 		// Compact: just left + right, no center
 		gap := innerWidth - leftLen - rightLen
 		if gap < 1 {
-			// Super compact: emoji-only buttons
-			searchCompact := iconBtn("🔍")
-			filterCompact := iconBtn("🧪")
-			colCompact := iconBtn("📊")
-			pauseCompact := iconBtn("⏸")
+			// Super compact: icon-only buttons
+			searchCompact := iconBtn(IconSearch)
+			filterCompact := iconBtn(IconFilter)
+			colCompact := iconBtn(IconColumns)
+			pauseCompact := iconBtn(IconPause)
 			if frozen {
-				pauseCompact = lipgloss.NewStyle().Background(th.Surface0).Foreground(th.Peach).Bold(true).Render("🧊")
+				pauseCompact = lipgloss.NewStyle().Background(th.Surface0).Foreground(th.Peach).Bold(true).Render(IconFrozen)
 			}
-			themeCompact := iconBtn("🎨")
-			helpCompact := iconBtn("❓")
+			themeCompact := iconBtn(IconTheme)
+			helpCompact := iconBtn(IconHelp)
 			left = searchCompact + " " + filterCompact
 			right = colCompact + " " + pauseCompact + " " + themeCompact + " " + helpCompact
 			leftLen = lipgloss.Width(left)

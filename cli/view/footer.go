@@ -31,7 +31,7 @@ func (f *Footer) Render(stats types.SystemStats, selectedPID int, selectedName s
 	// Left: hostname + OS
 	left := ""
 	if stats.Hostname != "" {
-		left += accent.Render("🏠 " + stats.Hostname)
+		left += accent.Render(stats.Hostname)
 	}
 	if stats.OSVersion != "" {
 		left += sep + val.Render(stats.OSVersion)
@@ -55,16 +55,16 @@ func (f *Footer) Render(stats types.SystemStats, selectedPID int, selectedName s
 
 		var pinBtn string
 		if isPinned {
-			pinBtn = btnStyle.Render("📌 Unpin " + keyStyle.Render("(u)"))
+			pinBtn = btnStyle.Render("Unpin " + keyStyle.Render("(u)"))
 		} else {
-			pinBtn = btnStyle.Render("📌 Pin " + keyStyle.Render("(p)"))
+			pinBtn = btnStyle.Render("Pin " + keyStyle.Render("(p)"))
 		}
-		infoBtn := btnStyle.Render("ℹ️ Info " + keyStyle.Render("(i)"))
+		infoBtn := btnStyle.Render("Info " + keyStyle.Render("(i)"))
 		killBtn := lipgloss.NewStyle().
 			Background(th.Surface0).
 			Foreground(th.Red).
 			Padding(0, 1).
-			Render("☠️ Kill " + dangerKeyStyle.Render("(k)"))
+			Render("Kill " + dangerKeyStyle.Render("(k)"))
 
 		right = pidInfo + "  " + pinBtn + " " + infoBtn + " " + killBtn
 	} else {

@@ -158,10 +158,10 @@ func (s *StatsBar) Render(stats types.SystemStats, width int) string {
 		flex   float64
 	}
 	allPanels := []panelSpec{
-		{s.renderCPU, "cpu", "🚀", th.Purple, 2.5},
-		{s.renderMemory, "mem", "💾", th.Blue, 2.0},
-		{s.renderInfo, "info", "ℹ️", th.Green, 1.2},
-		{s.renderNetwork, "net", "🌐", th.Peach, 1.2},
+		{s.renderCPU, "cpu", IconCPU, th.Purple, 2.5},
+		{s.renderMemory, "mem", IconMemory, th.Blue, 2.0},
+		{s.renderInfo, "info", IconSystem, th.Green, 1.2},
+		{s.renderNetwork, "net", IconNetwork, th.Peach, 1.2},
 	}
 
 	// Determine layout mode
@@ -268,7 +268,7 @@ func (s *StatsBar) Render(stats types.SystemStats, width int) string {
 
 	panelsBlock := strings.Join(rowStrings, "\n")
 
-	// ── Ghost emoji branding centered above panels with gradient ──
+	// ── Branding centered above panels with gradient ──
 	brandColors := []color.Color{th.Purple, th.Purple, th.Pink, th.Pink, th.Fuchsia, th.Fuchsia, th.Indigo}
 	brandText := "NeoHtop"
 	var brandChars string
@@ -279,7 +279,7 @@ func (s *StatsBar) Render(stats types.SystemStats, width int) string {
 	cli := lipgloss.NewStyle().
 		Foreground(th.Overlay0).
 		Render(" CLI")
-	brandStr := "👻 " + brandChars + cli
+	brandStr := brandChars + cli
 	brandW := lipgloss.Width(brandStr)
 	pad := (width - brandW) / 2
 	if pad < 0 {
@@ -386,11 +386,11 @@ func (s *StatsBar) renderCompact(stats types.SystemStats, width int) string {
 	}
 
 	parts := []string{
-		titleStyle.Render("🚀 ") + valStyle.Render(fmt.Sprintf("%.0f%%", avg)),
-		titleStyle.Render("💾 ") + valStyle.Render(fmt.Sprintf("%.0f%%", memPct)),
-		titleStyle.Render("💿 ") + valStyle.Render(FormatBytes(stats.DiskUsedBytes)+"/"+FormatBytes(stats.DiskTotalBytes)),
-		titleStyle.Render("🌐 ") + labelStyle.Render("⬇️") + valStyle.Render(FormatBytes(stats.NetworkRxBytes)) + labelStyle.Render(" ⬆️") + valStyle.Render(FormatBytes(stats.NetworkTxBytes)),
-		titleStyle.Render("⏱️ ") + valStyle.Render(FormatUptime(stats.Uptime)),
+		titleStyle.Render("CPU ") + valStyle.Render(fmt.Sprintf("%.0f%%", avg)),
+		titleStyle.Render("MEM ") + valStyle.Render(fmt.Sprintf("%.0f%%", memPct)),
+		titleStyle.Render("DISK ") + valStyle.Render(FormatBytes(stats.DiskUsedBytes)+"/"+FormatBytes(stats.DiskTotalBytes)),
+		titleStyle.Render("NET ") + labelStyle.Render(IconDownload) + valStyle.Render(FormatBytes(stats.NetworkRxBytes)) + labelStyle.Render(" "+IconUpload) + valStyle.Render(FormatBytes(stats.NetworkTxBytes)),
+		titleStyle.Render("UP ") + valStyle.Render(FormatUptime(stats.Uptime)),
 	}
 
 	barStyle := lipgloss.NewStyle().

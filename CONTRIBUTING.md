@@ -195,4 +195,4 @@ Icon lookup uses exact match → prefix match → first word match → fallback.
 
 ---
 
-Thanks for helping make NeoHtop CLI better! 👻
+Thanks for helping make NeoHtop CLI better!

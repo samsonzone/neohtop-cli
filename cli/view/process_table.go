@@ -116,10 +116,9 @@ func (pt *ProcessTable) getColWidths() []int {
 
 func (pt *ProcessTable) Render(processes []types.Process, cursor, scrollOffset int, sortCfg types.SortConfig, pinned map[string]bool) string {
 	if len(processes) == 0 {
-		ghost := lipgloss.NewStyle().Foreground(pt.theme.Overlay0).Render("👻")
 		msg := lipgloss.NewStyle().Foreground(pt.theme.Overlay0).Italic(true).Render("No processes match your filters")
 		hint := lipgloss.NewStyle().Foreground(pt.theme.Overlay0).Render("Try adjusting search or filter criteria")
-		empty := ghost + "\n\n" + msg + "\n" + hint
+		empty := msg + "\n" + hint
 		box := lipgloss.NewStyle().Padding(3, 4).Width(pt.width).Align(lipgloss.Center)
 		return box.Render(empty)
 	}
@@ -350,7 +349,7 @@ func (pt *ProcessTable) buildRow(p types.Process, isPinned bool, globalIdx int, 
 				availW = 4
 			}
 			if isPinned {
-				prefix = "📌"
+				prefix = IconPin
 				if availW > 5 {
 					name = Truncate(name, availW-4) // icon(2) + pin(2)
 				}

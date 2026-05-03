@@ -183,7 +183,7 @@ func (a *App) newView(content string) tea.View {
 // View renders the UI — layout: StatsBar → ToolBar → ProcessTable
 func (a *App) View() tea.View {
 	if !a.ready {
-		loading := lipgloss.NewStyle().Foreground(lipgloss.Color("#cba6f7")).Bold(true).Render("👻 NeoHtop CLI")
+		loading := lipgloss.NewStyle().Foreground(lipgloss.Color("#cba6f7")).Bold(true).Render("NeoHtop CLI")
 		dots := lipgloss.NewStyle().Foreground(lipgloss.Color("#6c7086")).Render("Loading system data...")
 		return a.newView("\n\n" + lipgloss.PlaceHorizontal(a.width, lipgloss.Center, loading) + "\n" + lipgloss.PlaceHorizontal(a.width, lipgloss.Center, dots))
 	}
